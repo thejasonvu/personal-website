@@ -10,9 +10,12 @@ import ContentWrapper from "../../styles/ContentWrapper"
 
 const StyledSection = styled.section`
   width: 100%;
+  min-height: 90vh;
   height: auto;
   background: ${({ theme }) => theme.colors.background};
-  margin-top: 4rem;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
 `
 
 const StyledContentWrapper = styled(ContentWrapper)`
@@ -48,8 +51,7 @@ const StyledContentWrapper = styled(ContentWrapper)`
       }
     }
     .about-author {
-      border-radius: ${({ theme }) => theme.borderRadius};
-      box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.16);
+      border-radius: calc(${({ theme }) => theme.borderRadius} * 6);
       filter: grayscale(20%) contrast(1) brightness(90%);
       transition: all 0.3s ease-out;
       &:hover {

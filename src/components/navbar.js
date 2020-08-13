@@ -19,8 +19,9 @@ const StyledNav = styled.nav`
     }
   }
   .nav-link {
+    font-family: ${({ theme }) => theme.fonts.secondary};
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
     text-align: center;
     position: relative;
     margin: 0 0 0 1.25rem;
@@ -41,12 +42,10 @@ const StyledNav = styled.nav`
   .cta-btn {
     width: auto;
     height: auto;
-    font-weight: 700;
     border-radius: ${({ theme }) => theme.borderRadius};
     border: 0.125rem solid ${({ theme }) => theme.colors.primary};
     background: ${({ theme }) => theme.colors.background};
     transition: 20ms ease-out;
-    font-size: 1rem;
     padding: 0.5rem 1.5rem;
     margin: 0;
     &:hover {
@@ -67,7 +66,9 @@ const Navbar = () => {
           </Link>
         )
       })}
-      <Link className="cta-btn" to={button.url}>{button.name}</Link>
+      <a className="cta-btn button" target="_blank" href={button.url}>
+        {button.name}
+      </a>
     </StyledNav>
   )
 }

@@ -22,11 +22,11 @@ const StyledContentWrapper = styled(ContentWrapper)`
   && {
     width: 100%;
     height: 100%;
-    min-height: 60vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 6rem;
+    margin-bottom: 0;
     @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
       margin-bottom: 4rem;
     }
@@ -34,6 +34,8 @@ const StyledContentWrapper = styled(ContentWrapper)`
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      margin-bottom: -0.75rem;
+      font-weight: 300;
     }
     .emoji {
       margin-left: 0.75rem;
@@ -46,9 +48,9 @@ const StyledContentWrapper = styled(ContentWrapper)`
       }
     }
     .title {
-      margin-bottom: 1.5rem;
+      margin: 1.5rem 0;
       @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-        margin-bottom: 0;
+        margin: 1rem 0;
       }
     }
     .subtitle {
@@ -99,21 +101,14 @@ const Hero = ({ content }) => {
     }
     pageLoadSequence()
   }, [isIntroDone, eControls, gControls, sControls, uControls])
-  
+
   return (
     <StyledSection id="hero">
       {!isIntroDone && <SplashScreen />}
       <StyledContentWrapper>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={gControls}>
-          <h1 className="title">
-            <div className="greetings">
-              {frontmatter.greetings}
-              <motion.div animate={eControls} style={{ originX: 0.7, originY: 0.7 }}>
-                <Img className="emoji" fluid={frontmatter.icon.childImageSharp.fluid} />
-              </motion.div>
-            </div>
-            {frontmatter.title}
-          </h1>
+          <h6 className="greetings">{frontmatter.greetings}</h6>
+          <h1 className="title">{frontmatter.title}</h1>
           <h2 className="subtitle">
             {frontmatter.subtitlePrefix}{" "}
             {/* Hover state color can be set in useEffect hook */}
@@ -124,9 +119,6 @@ const Hero = ({ content }) => {
           <div className="description">
             <MDXRenderer>{body}</MDXRenderer>
           </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, x: 20 }} animate={sControls}>
-          <Social fontSize=".95rem" padding=".3rem 1.25rem" width="auto" />
         </motion.div>
       </StyledContentWrapper>
     </StyledSection>

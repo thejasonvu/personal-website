@@ -1,9 +1,9 @@
 module.exports = {
   colors: {
-    primary: "#000000",
+    primary: "#000",
     secondary: "#FFF4D9",
     tertiary: "#F2F2F2",
-    text: "#000000",
+    text: "#373D3F",
     background: "#ffffff",
   },
   breakpoints: {
@@ -13,10 +13,24 @@ module.exports = {
     lg: "1200px",
   },
   fonts: {
-    primary: "Roboto, Arial, sans-serif",
+    primary: "Merriweather, Times New Roman, serif",
+    secondary: "Libre Franklin, Arial, sans-serif",
   },
-  borderRadius: "1rem",
+  borderRadius: "0rem",
   pageWidth: "62.5rem",
   headerHeight: "6.25rem",
   footerHeight: "7.5rem",
+  elevations: {
+    0: "none",
+    1: "0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20)",
+    2: "0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20)",
+    3: "0 3px 4px 0 rgba(0,0,0,0.14), 0 3px 3px -2px rgba(0,0,0,0.12), 0 1px 8px 0 rgba(0,0,0,0.20)",
+    4: "0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.20)",
+    6: "0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.20)",
+    8: "0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.20)",
+    9: "0 9px 12px 1px rgba(0,0,0,0.14), 0 3px 16px 2px rgba(0,0,0,0.12), 0 5px 6px -3px rgba(0,0,0,0.20)",
+    12: "0 12px 17px 2px rgba(0,0,0,0.14), 0 5px 22px 4px rgba(0,0,0,0.12), 0 7px 8px -4px rgba(0,0,0,0.20)",
+    16: "0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.20)",
+    24: "0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.20)",
+  },
 }

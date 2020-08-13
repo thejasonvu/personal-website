@@ -37,60 +37,28 @@ const StyledContentWrapper = styled(ContentWrapper)`
     }
     .articles {
       display: flex;
-      justify-content: space-between;
-      overflow-x: scroll;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
+      align-items: stretch;
+      flex-direction: column;
       margin: -2rem 0 0 0;
       padding: 0 2rem;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-      @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-        padding: 0;
-        overflow: visible;
-      }
-      /* Show scrollbar if desktop and wrapper width > viewport width */
-      @media (hover: hover) {
-        &::-webkit-scrollbar {
-          display: block;
-          -webkit-appearance: none;
-        }
-
-        &::-webkit-scrollbar:horizontal {
-          height: 0.8rem;
-        }
-
-        &::-webkit-scrollbar-thumb {
-          border-radius: 8px;
-          border: 0.2rem solid white;
-          background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        &::-webkit-scrollbar-track {
-          background-color: #fff;
-          border-radius: 8px;
-        }
-      }
     }
     .card {
-      width: 16.25rem;
-      height: 12rem;
+      max-width: calc(${({ theme }) => theme.pageWidth} * 0.8);
       display: flex;
       flex-direction: column;
-      justify-content: center;
       padding: 1rem;
-      margin: 2rem 1rem;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.16);
-      border-radius: ${({ theme }) => theme.borderRadius};
+      margin: 1rem auto;
+      box-shadow: ${({ theme }) => theme.elevations[1]};
+      border-radius: calc(${({ theme }) => theme.borderRadius} * 6);
       transition: box-shadow 0.3s ease-out;
       &:hover {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.32);
+        box-shadow: ${({ theme }) => theme.elevations[8]};
       }
       &:hover ${Underlining} {
         box-shadow: inset 0 -1rem 0 ${({ theme }) => theme.colors.secondary};
       }
       @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+        box-shadow: ${({ theme }) => theme.elevations[0]};
         margin: 2rem auto;
       }
       .category {
@@ -102,11 +70,22 @@ const StyledContentWrapper = styled(ContentWrapper)`
       .title {
         margin-top: 0.25rem;
         margin-bottom: 0.25rem;
+        font-weight: 700;
       }
       .date {
-        font-size: 0.75rem;
         color: #555555;
         letter-spacing: +0.5px;
+      }
+      .tags {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .tag {
+        margin-right: 0.5rem;
+      }
+      .description {
+        font-weight: 300;
       }
     }
   }
@@ -120,24 +99,25 @@ const Articles = () => {
   const { isIntroDone } = useContext(Context).state
   const [articles, setArticles] = useState()
   const articlesControls = useAnimation()
-  
+
   // Load and display articles after the splashScreen sequence is done
   useEffect(() => {
     const loadArticles = async () => {
       if (isIntroDone) {
-        await articlesControls.start({ opacity: 1, y: 0, transition: { delay: 1 } })
+        await articlesControls.start({
+          opacity: 1,
+          y: 0,
+          transition: { delay: 1 },
+        })
         // MediumRssFeed is set in config.js
         fetch(mediumRssFeed, { headers: { Accept: "application/json" } })
-        .then(res => res.json())
-        // Feed also contains comments, therefore we filter for articles only
-        .then(data => data.items.filter(item => item.categories.length > 0))
-        .then(newArticles => newArticles.slice(0, MAX_ARTICLES))
-        .then(articles => setArticles(articles))
-        .catch(error => console.log(error))
+          .then(res => res.json())
+          .then(articles => setArticles(articles))
+          .catch(error => console.log(error))
       }
     }
     loadArticles()
-  },[isIntroDone, articlesControls, MAX_ARTICLES])
+  }, [isIntroDone, articlesControls, MAX_ARTICLES])
 
   return (
     <StyledSection
@@ -145,49 +125,51 @@ const Articles = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={articlesControls}
     >
-      <StyledContentWrapper>
-        <h3 className="section-title">Latest Articles on Medium</h3>
+      <StyledContentWrapper elevation={2}>
+        <h3 className="section-title">Latest Articles on Dev.to</h3>
         <div className="articles">
           {articles
             ? articles.map(item => (
                 <a
-                  href={item.link}
+                  href={item.url}
                   target="_blank"
                   rel="nofollow noopener noreferrer"
                   title={item.title}
-                  aria-label={item.link}
-                  key={item.link}
+                  aria-label={item.url}
+                  key={item.url}
                 >
                   <div className="card">
-                    <span className="category">
-                      <Underlining color="tertiary" hoverColor="secondary">
-                        {item.categories[2]}
-                      </Underlining>
+                    <span className="date body-2">
+                      {parseDate(item.published_timestamp)}
                     </span>
-                    <h4 className="title">{item.title}</h4>
-                    <span className="date">{parseDate(item.pubDate)}</span>
+                    <h5 className="title">{item.title}</h5>
+                    <p className="body-1 description">{item.description}</p>
+                    <div className="tags">
+                      {item.tag_list.map(tag => (
+                        <span className="tag caption" key={item.link + tag}>
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </a>
               ))
             : [...Array(MAX_ARTICLES)].map((i, key) => (
-              <div className="card" key={key}>
-                <SkeletonLoader 
-                  background="#f2f2f2"
-                  height="1.5rem" 
-                  style={{ marginBottom: ".5rem" }}
-                />
-                <SkeletonLoader 
-                  background="#f2f2f2" 
-                  height="4rem"
-                />
-                <SkeletonLoader 
-                  background="#f2f2f2" 
-                  height=".75rem" 
-                  width="50%" 
-                  style={{ marginTop: ".5rem" }}
-                />
-              </div>
-            ))}
+                <div className="card" key={key}>
+                  <SkeletonLoader
+                    background="#f2f2f2"
+                    height="1.5rem"
+                    style={{ marginBottom: ".5rem" }}
+                  />
+                  <SkeletonLoader background="#f2f2f2" height="4rem" />
+                  <SkeletonLoader
+                    background="#f2f2f2"
+                    height=".75rem"
+                    width="50%"
+                    style={{ marginTop: ".5rem" }}
+                  />
+                </div>
+              ))}
         </div>
       </StyledContentWrapper>
     </StyledSection>

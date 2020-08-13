@@ -51,42 +51,12 @@ const StyledContentWrapper = styled(ContentWrapper)`
     }
     .projects {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       margin-top: -2.5rem;
       padding: 2.5rem 2.5rem;
-      overflow-x: scroll;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      &::-webkit-scrollbar {
-        display: none;
-      }
       @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-        flex-direction: column;
         margin-top: 0;
         padding: 0;
-        overflow: visible;
-      }
-      /* Show scrollbar if desktop and wrapper width > viewport width */
-      @media (hover: hover) {
-        &::-webkit-scrollbar {
-          display: block;
-          -webkit-appearance: none;
-        }
-
-        &::-webkit-scrollbar:horizontal {
-          height: 0.8rem;
-        }
-
-        &::-webkit-scrollbar-thumb {
-          border-radius: 8px;
-          border: 0.2rem solid white;
-          background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        &::-webkit-scrollbar-track {
-          background-color: #fff;
-          border-radius: 8px;
-        }
       }
     }
     .counter {
@@ -112,6 +82,7 @@ const StyledProject = styled(motion.div)`
   flex-shrink: 0;
   padding-right: 2.5rem;
   max-width: 20rem;
+  box-shadow: ${({ theme }) => theme.elevations[1]};
   @media (min-width: ${({ theme }) => theme.breakpoints.xs}) {
     max-width: 25rem;
     margin-top: 2rem;
@@ -129,6 +100,7 @@ const StyledProject = styled(motion.div)`
   }
   .details {
     width: 100%;
+    padding: 0.5rem;
     max-width: 25rem;
     display: flex;
     flex-direction: column;
@@ -137,17 +109,19 @@ const StyledProject = styled(motion.div)`
       margin-top: 0;
     }
     .category {
-      font-size: 0.875rem;
-      line-height: 1rem;
-      text-transform: uppercase;
-      letter-spacing: +1px;
+      letter-spacing: +0.5px;
     }
     .title {
       margin-top: 0.625rem;
       margin-bottom: 0.625rem;
-      font-size: 1.375rem;
-      line-height: 1.625rem;
-      font-weight: 700;
+    }
+    .description {
+      position: relative;
+      z-index: 102;
+      width: 130%;
+      background-color: white;
+      padding: 0.5rem;
+      box-shadow: ${({ theme }) => theme.elevations[2]};
     }
     .tags {
       display: flex;
@@ -180,18 +154,21 @@ const StyledProject = styled(motion.div)`
     }
   }
   .screenshot {
+    position: relative;
+    z-index: 100;
     width: 100%;
-    max-width: 25rem;
+    max-width: 37.5rem;
     height: 15rem;
-    border-radius: ${({ theme }) => theme.borderRadius};
-    box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.16);
-    transition: all 0.3s ease-out;
+    border-radius: calc(${({ theme }) => theme.borderRadius} * 6);
+    transition: all 0.3s ease-in-out;
     &:hover {
+      filter: none;
       transform: translate3d(0px, -0.125rem, 0px);
       box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.32);
     }
     @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-      height: 18.75rem;
+      height: 22.5rem;
+      filter: grayscale(70%) contrast(1) brightness(90%);
     }
   }
 `
@@ -258,9 +235,6 @@ const Projects = ({ content }) => {
           animate={tOnScreen ? "visible" : "hidden"}
         >
           <h3 className="section-title">{sectionDetails.frontmatter.title}</h3>
-          <div className="counter">
-            {visibleProject} / {projects.length}
-          </div>
         </motion.div>
         <div className="projects">
           {projects.map(project => {
@@ -280,12 +254,14 @@ const Projects = ({ content }) => {
                   }
                 >
                   <div className="details">
-                    <div className="category">
+                    <div className="category overline">
                       {frontmatter.emoji} {frontmatter.category}
                     </div>
-                    <div className="title">{frontmatter.title}</div>
-                    <MDXRenderer>{body}</MDXRenderer>
-                    <div className="tags">
+                    <h6 className="title">{frontmatter.title}</h6>
+                    <div className="body-1 description">
+                      <MDXRenderer>{body}</MDXRenderer>
+                    </div>
+                    <div className="tags body-2">
                       {frontmatter.tags.map(tag => (
                         <Underlining
                           key={tag}
@@ -336,19 +312,19 @@ const Projects = ({ content }) => {
       </StyledContentWrapper>
       {sectionDetails.frontmatter.buttonVisible === "true" && (
         <motion.a
-        ref={bRef}
-        variants={bVariants}
-        animate={bOnScreen ? "visible" : "hidden"}
-        className="cta-btn"
-        href={sectionDetails.frontmatter.buttonUrl}
-        target="_blank"
-        rel="nofollow noopener noreferrer"
-        aria-label="External Link"
-      >
-        <Button type="button" textAlign="center" color="primary" center>
-          {sectionDetails.frontmatter.buttonText}
-        </Button>
-      </motion.a>
+          ref={bRef}
+          variants={bVariants}
+          animate={bOnScreen ? "visible" : "hidden"}
+          className="cta-btn"
+          href={sectionDetails.frontmatter.buttonUrl}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+          aria-label="External Link"
+        >
+          <Button type="button" textAlign="center" color="primary" center>
+            {sectionDetails.frontmatter.buttonText}
+          </Button>
+        </motion.a>
       )}
     </StyledSection>
   )

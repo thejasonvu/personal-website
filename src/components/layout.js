@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import PropTypes from "prop-types"
 import styled, { ThemeProvider } from "styled-components"
 import "typeface-roboto"
+import "typeface-merriweather"
+import "typeface-libre-franklin"
 
 import Context from "../context/"
 import Theme from "../styles/Theme"
@@ -24,7 +26,6 @@ const StyledLayoutWrapper = styled.div`
 `
 
 const Layout = ({ children, splashScreen }) => {
-  
   // you can determine whether you want to have a splashScreen
   // for each page in the respective page component
   // if splashScreen = false, we set isIntroDone = true to skip
