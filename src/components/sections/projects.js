@@ -37,14 +37,14 @@ const StyledContentWrapper = styled(ContentWrapper)`
     justify-content: center;
     padding-right: 0;
     padding-left: 0;
-    @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
       padding-right: 2.5rem;
       padding-left: 2.5rem;
     }
     .section-title {
       padding-right: 2.5rem;
       padding-left: 2.5rem;
-      @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+      @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
         padding-right: 0;
         padding-left: 0;
       }
@@ -53,20 +53,10 @@ const StyledContentWrapper = styled(ContentWrapper)`
       display: flex;
       flex-direction: column;
       margin-top: -2.5rem;
-      padding: 2.5rem 2.5rem;
-      @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+      padding: 0 2rem;
+      @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
         margin-top: 0;
         padding: 0;
-      }
-    }
-    .counter {
-      position: absolute;
-      top: 2.2rem;
-      right: 2.5rem;
-      font-size: 1.125rem;
-      font-weight: 500;
-      @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-        display: none;
       }
     }
   }
@@ -80,15 +70,13 @@ const StyledProject = styled(motion.div)`
   margin-top: 0;
   margin-bottom: 2rem;
   flex-shrink: 0;
-  padding-right: 2.5rem;
-  max-width: 20rem;
-  box-shadow: ${({ theme }) => theme.elevations[1]};
+  width: 100%;
   @media (min-width: ${({ theme }) => theme.breakpoints.xs}) {
     max-width: 25rem;
     margin-top: 2rem;
     padding-right: 5rem;
   }
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.xs}) {
     justify-content: space-between;
     flex-shrink: 1;
     max-width: 62.5rem;
@@ -99,14 +87,16 @@ const StyledProject = styled(motion.div)`
       position % 2 !== 0 ? "row" : "row-reverse"};
   }
   .details {
+    text-align: ${({ position }) => (position % 2 !== 0 ? "left" : "right")};
     width: 100%;
-    padding: 0.5rem;
+    padding-left: 0.5rem;
     max-width: 25rem;
     display: flex;
     flex-direction: column;
     margin-top: 3rem;
-    @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    @media (min-width: ${({ theme }) => theme.breakpoints.xs}) {
       margin-top: 0;
+      max-height: 22.5rem;
     }
     .category {
       letter-spacing: +0.5px;
@@ -116,32 +106,32 @@ const StyledProject = styled(motion.div)`
       margin-bottom: 0.625rem;
     }
     .description {
-      position: relative;
-      z-index: 102;
-      width: 130%;
-      background-color: white;
-      padding: 0.5rem;
-      box-shadow: ${({ theme }) => theme.elevations[2]};
+      overflow: auto;
     }
     .tags {
       display: flex;
+      justify-content: ${({ position }) =>
+        position % 2 !== 0 ? "flex-start" : "flex-end"};
       flex-wrap: wrap;
       margin-top: 1.5rem;
       line-height: 1.2rem;
       span {
-        margin-right: 1rem;
+        margin-${({ position }) =>
+          position % 2 !== 0 ? "right" : "left"}: 1rem;
         margin-bottom: 1rem;
       }
     }
     .links {
       display: flex;
-      justify-content: flex-start;
+      justify-content: ${({ position }) =>
+        position % 2 !== 0 ? "flex-start" : "flex-end"};
       align-items: center;
       width: 100%;
       margin-top: 1rem;
       a {
         display: inline-block;
-        margin-right: 2rem;
+        margin-${({ position }) =>
+          position % 2 !== 0 ? "right" : "left"}: 2rem;
       }
       svg {
         width: 1.3rem;
@@ -154,8 +144,6 @@ const StyledProject = styled(motion.div)`
     }
   }
   .screenshot {
-    position: relative;
-    z-index: 100;
     width: 100%;
     max-width: 37.5rem;
     height: 15rem;
@@ -164,9 +152,8 @@ const StyledProject = styled(motion.div)`
     &:hover {
       filter: none;
       transform: translate3d(0px, -0.125rem, 0px);
-      box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.32);
     }
-    @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    @media (min-width: ${({ theme }) => theme.breakpoints.xs}) {
       height: 22.5rem;
       filter: grayscale(70%) contrast(1) brightness(90%);
     }
