@@ -41,20 +41,15 @@ const StyledContentWrapper = styled(ContentWrapper)`
         align-items: center;
         margin-bottom: 3rem;
       }
-      .avatar {
-        width: 100%;
-        max-width: 8.75rem;
-        border-radius: 50%;
-        margin-right: 4rem;
-        margin-bottom: 2rem;
-        @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-          margin-bottom: 0;
-        }
-      }
       .details {
+        margin: 0 auto;
+        text-align: center;
         font-size: 1.125rem;
         line-height: 2rem;
       }
+    }
+    h3 {
+      text-align: center;
     }
   }
 `
@@ -67,16 +62,20 @@ const Contact = ({ content }) => {
   const onScreen = useOnScreen(ref)
   const variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 } 
+    visible: { opacity: 1, y: 0 },
   }
 
   return (
-    <StyledSection id="contact" ref={ref} variants={variants} animate={onScreen ? "visible" : "hidden"}>
+    <StyledSection
+      id="contact"
+      ref={ref}
+      variants={variants}
+      animate={onScreen ? "visible" : "hidden"}
+    >
       <StyledContentWrapper>
         <h3>{frontmatter.title}</h3>
         <MDXRenderer>{body}</MDXRenderer>
         <div className="profile">
-          <Img className="avatar" fluid={frontmatter.profileImage.childImageSharp.fluid} />
           <div className="details">
             <strong>{frontmatter.name}</strong>
             <br />
