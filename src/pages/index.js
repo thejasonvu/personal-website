@@ -7,7 +7,6 @@ import SEO from "../components/seo"
 import Hero from "../components/sections/hero"
 import Articles from "../components/sections/articles"
 import About from "../components/sections/about"
-import Interests from "../components/sections/interests"
 import Projects from "../components/sections/projects"
 import Contact from "../components/sections/contact"
 import { splashScreen } from "../config"
@@ -20,7 +19,6 @@ const IndexPage = ({ data }) => (
     <Projects content={data.projects.edges} />
     {/* Articles is populated via Medium RSS Feed fetch */}
     <Articles />
-    <Interests content={data.interests.edges} />
     <Contact content={data.contact.edges} />
   </Layout>
 )
@@ -70,28 +68,6 @@ export const pageQuery = graphql`
         }
       }
     }
-    interests: allMdx(filter: { fileAbsolutePath: { regex: "/interests/" } }) {
-      edges {
-        node {
-          exports {
-            shownItems
-            interests {
-              name
-              icon {
-                childImageSharp {
-                  fixed(width: 20, height: 20, quality: 90) {
-                    ...GatsbyImageSharpFixed
-                  }
-                }
-              }
-            }
-          }
-          frontmatter {
-            title
-          }
-        }
-      }
-    }
     projects: allMdx(
       filter: {
         fileAbsolutePath: { regex: "/projects/" }
@@ -132,13 +108,6 @@ export const pageQuery = graphql`
             title
             name
             email
-            profileImage {
-              childImageSharp {
-                fluid(maxWidth: 400, quality: 90) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
           }
         }
       }
