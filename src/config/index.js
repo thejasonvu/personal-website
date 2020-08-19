@@ -2,7 +2,8 @@ module.exports = {
   author: "@thejasonvu",
   siteTitle: "Jason Vu Portfolio",
   siteShortTitle: "Jason Vu", // Used as logo text in header, footer, and splash screen
-  siteDescription: "",
+  siteDescription:
+    "Jason Vu is a software developer who specializes in building great applications.",
   siteUrl: "https://gatsby-starter-portfolio-minimal.netlify.app/",
   siteLanguage: "en_US",
   siteIcon: "src/content/favicon.png", // Relative to gatsby-config file
