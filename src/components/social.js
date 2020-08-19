@@ -8,26 +8,9 @@ import Icon from "./icons"
 const { socialMedia } = config
 
 const StyledSocialWrapper = styled.div`
-  display: grid;
-  /* Calculate columns, depending on how many profiles there are */
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(${({ width }) => width}, 1fr)
-  );
-  justify-content: start;
-  justify-items: start;
-
-  margin-left: -2.5rem;
-  margin-right: -2.5rem;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-
-  /* Workaround: https://stackoverflow.com/questions/38993170/last-margin-padding-collapsing-in-flexbox-grid-layout */
-  &::after {
-    content: "";
-    width: 2.5rem;
-  }
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   a {
     margin-right: 0.5rem;
     margin-bottom: 0.75rem;
