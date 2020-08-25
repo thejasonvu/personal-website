@@ -4,15 +4,13 @@ module.exports = {
   siteShortTitle: "Jason Vu", // Used as logo text in header, footer, and splash screen
   siteDescription:
     "Jason Vu is a software developer who specializes in building great applications.",
-  siteUrl: "https://gatsby-starter-portfolio-minimal.netlify.app/",
+  siteUrl: "https://jasonvu.dev",
   siteLanguage: "en_US",
   siteIcon: "src/content/favicon.png", // Relative to gatsby-config file
 
   splashScreen: false, // Set this to true if you want to use the splash screen
 
-  // You can create your own Medium feed with this rss to json converter: https://rss2json.com/
-  // To access your Medium RSS feed, just replace this url with your username: https://medium.com/feed/@{yourname}
-  mediumRssFeed: "https://dev.to/api/articles?username=study_web_dev",
+  mediumRssFeed: "https://dev.to/api/articles?username=thejasonvu",
   shownArticles: 3,
 
   // There are icons available for the following platforms:
